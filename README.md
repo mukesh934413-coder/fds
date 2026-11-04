@@ -522,3 +522,238 @@ Mode: 20
 Variance: 104.0
 Standard Deviation: 10.198039027185569
 
+
+
+
+
+
+4(a). Reading Data from Excel File
+Program
+import pandas as pd
+df=pd.read_excel("data.xlsx")
+print(df.head())
+Output
+Example output:
+ Name Mark
+0 Arun 80
+1 Banu 90
+2 Ravi 75
+Note: Keep data.xlsx in the same folder. Install openpyxl. The output depends on your Excel file.
+4(b). Reading Data from Text File
+Program
+import pandas as pd
+df=pd.read_csv("data.txt", sep="\t")
+print(df)
+Output
+Example output:
+ Name Mark
+0 Arun 80
+1 Banu 90
+Note: The example assumes the text file has tab-separated columns named Name and Mark. If it is comma-separated, remove sep='\t'.
+4(c). Reading Data from Webpage
+Program
+import pandas as pd
+url="https://en.wikipedia.org/wiki/Iris_flower_data_set"
+tables=pd.read_html(url)
+print(tables[0].head())
+Output
+Output:
+Displays the first five rows of the first table found on the webpage.
+Note: Requires internet access and lxml. The exact table/output can change with the webpage.
+4(d). Descriptive Analysis on Iris Dataset
+Program
+from sklearn.datasets import load_iris
+import pandas as pd
+d=load_iris()
+df=pd.DataFrame(d.data,columns=d.feature_names)
+print(df.head())
+print(df.describe())
+Output
+Example output (first rows):
+ sepal length (cm) sepal width (cm) ...
+0 5.1 3.5
+1 4.9 3.0
+2 4.7 3.2
+Summary includes count, mean, std, min, quartiles and max.
+
+1. Working with NumPy Arrays
+Program
+import numpy as np
+a=np.array([10,20,30,40])
+print(a)
+print("Sum:",a.sum())
+print("Mean:",a.mean())
+print("Min:",a.min())
+print("Max:",a.max())
+Output
+[10 20 30 40]
+Sum: 100
+Mean: 25.0
+Min: 10
+Max: 40
+2. Array Operations
+Program
+import numpy as np
+a=np.array([1,2,3])
+b=np.array([4,5,6])
+print(a+b)
+print(a-b)
+print(a*b)
+print(a/b)
+Output
+[5 7 9]
+[-3 -3 -3]
+[ 4 10 18]
+[0.25 0.4 0.5 ]
+3. Working with Pandas DataFrame
+Program
+import pandas as pd
+d={'Name':['A','B','C'],'Mark':[80,90,70]}
+df=pd.DataFrame(d)
+print(df)
+print(df.iloc[0:2])
+print(df[df.Mark>75])
+Output
+ Name Mark
+0 A 80
+1 B 90
+2 C 70
+ Name Mark
+0 A 80
+1 B 90
+ Name Mark
+0 A 80
+1 B 90
+
+
+
+5. Basic Plots and Three-Dimensional Plot
+Program
+import matplotlib.pyplot as p
+x=[1,2,3,4]
+y=[2,4,6,8]
+p.subplot(1,2,1)
+p.plot(x,y)
+p.title("Line Plot")
+ax=p.subplot(1,2,2,projection="3d")
+ax.scatter(x,y,[1,2,3,4])
+p.show()
+Output
+Output:
+Shows a 2D line plot and a 3D scatter plot.
+Note: Requires matplotlib.
+6. Visualizing Geographic Data Using Basemap
+Program
+import matplotlib.pyplot as p
+from mpl_toolkits.basemap import Basemap
+m=Basemap(projection="mill")
+m.drawcoastlines()
+m.drawcountries()
+m.drawmapboundary()
+p.show()
+Output
+Output:
+Displays a world map with coastlines and country boundaries.
+Note: Requires matplotlib and Basemap. Basemap installation may need a compatible Python environment.
+7(a). Univariate Analysis of Diabetes Dataset
+Program
+import matplotlib.pyplot as p
+from sklearn.datasets import load_diabetes
+d=load_diabetes()
+p.hist(d.data[:,2])
+p.xlabel("BMI")
+p.ylabel("Frequency")
+p.show()
+Output
+Output:
+Displays a histogram showing the distribution of BMI values.
+Note: Uses scikit-learn's built-in diabetes dataset.
+7(b). Bivariate Analysis of Diabetes Dataset
+Program
+import matplotlib.pyplot as p
+from sklearn.datasets import load_diabetes
+d=load_diabetes()
+p.scatter(d.data[:,2],d.target)
+p.xlabel("BMI")
+p.ylabel("Disease Progression")
+p.show()
+Output
+Output:
+Displays a scatter plot of BMI against disease progression.
+
+
+
+
+7(c). Bivariate Analysis – Logistic Modelling
+Program
+from sklearn.datasets import load_diabetes
+from sklearn.linear_model import LogisticRegression
+d=load_diabetes()
+y=(d.target>d.target.mean()).astype(int)
+m=LogisticRegression()
+m.fit(d.data[:,[2]],y)
+print(m.predict([[0.05]]))
+Output
+Example output:
+[1]
+Note: This demonstrates logistic classification by converting the continuous diabetes target into two classes. It is not a medical diagnosis.
+7(d). Multiple Regression Analysis
+Program
+from sklearn.datasets import load_diabetes
+from sklearn.linear_model import LinearRegression
+d=load_diabetes()
+m=LinearRegression()
+m.fit(d.data,d.target)
+print("R2:",round(m.score(d.data,d.target),3))
+Output
+Output (approximately):
+R2: 0.518
+Note: Important: this uses scikit-learn's diabetes dataset, not the separate Pima Indians Diabetes dataset. It performs multiple linear regression.
+8. Z-Scores and Normal Distribution
+Program
+from scipy.stats import zscore,norm
+import numpy as np
+a=np.array([10,20,30,40,50])
+print(np.round(zscore(a),3))
+print(norm.pdf(0))
+Output
+[-1.414 -0.707 0. 0.707 1.414]
+0.3989422804014327
+Note: Requires scipy and numpy.
+9. Correlation Coefficient and Scatterplot
+Program
+import numpy as np
+import matplotlib.pyplot as p
+x=[1,2,3,4,5]
+y=[2,4,6,8,10]
+print("Correlation:",np.corrcoef(x,y)[0,1])
+p.scatter(x,y)
+p.show()
+Output
+Correlation: 1.0
+Output:
+Shows a straight upward-sloping scatter plot.
+Note: Correlation 1.0 means perfect positive linear correlation for this example
+
+
+
+
+
+10. Simple Linear Regression and R²
+Program
+from sklearn.linear_model import LinearRegression
+x=[[1],[2],[3],[4],[5]]
+y=[2,4,6,8,10]
+m=LinearRegression()
+m.fit(x,y)
+print("Prediction:",m.predict([[6]]))
+print("R2:",m.score(x,y))
+Output
+Prediction: [12.]
+R2: 1.0
+Note: R² = 1.0 means the model fits this sample data perfectly.
+Required Python packages
+pip install numpy pandas matplotlib scipy scikit-learn openpyxl lxml
+Basemap may need a separate compatible installation. For Excel reading, keep the Excel file in the same folder as the program. For webpage
+reading, internet access is required.
+
